@@ -7,7 +7,7 @@ def dictfetchall(cursor):
     return [
         dict(zip(columns, row)) for row in cursor.fetchall()
     ]
-
+ 
 
 def dictfetchone(cursor):
     row = cursor.fetchone()
@@ -46,12 +46,18 @@ def get_subject():
         subjects = dictfetchall(cursor)
         return subjects
 
-
+ 
 def get_teacher():
     with closing(connection.cursor()) as cursor:
-        cursor.execute("""SELECT adminapp_teacher.id, adminapp_teacher.first_name, adminapp_teacher.last_name,
-        adminapp_teacher.age, adminapp_kafedra.name as kafedra_name, adminapp_subject.name as subject_name from 
-        adminapp_teacher left join adminapp_kafedra on adminapp_teacher.kafedra_id = adminapp_kafedra.id
+        cursor.execute("""SELECT adminapp_teacher.id, 
+                                    adminapp_teacher.first_name, 
+                                    adminapp_teacher.last_name,
+                                    adminapp_teacher.age, 
+                                    adminapp_kafedra.name as kafedra_name, 
+                                    adminapp_subject.name as subject_name 
+                                    from adminapp_teacher left join 
+                                    adminapp_kafedra on 
+                                    adminapp_teacher.kafedra_id = adminapp_kafedra.id
         left join adminapp_subject on adminapp_teacher.subject_id = adminapp_subject.id""")
         teachers = dictfetchall(cursor)
         return teachers

@@ -25,9 +25,9 @@ def login_page(request):
             return redirect("home_page")
 
     return render(request, 'login.html')
+    
 
-
-@login_required_decorator
+@login_required_decorator   
 def home_page(request):
     faculties = services.get_faculties()
     kafedras = services.get_kafedra()
@@ -70,7 +70,7 @@ def faculty_create(request):
     }
     return render(request, 'faculty/form.html', ctx)
 
-
+ 
 @login_required_decorator
 def faculty_edit(request, pk):
     model = Faculty.objects.get(pk=pk)
@@ -236,7 +236,7 @@ def teacher_create(request):
         form.save()
 
         actions = request.session.get('actions', [])
-        actions += [f"Siz yangi {request.POST.get('name')} teacher yaratiz "]
+        actions += [f"Siz yangi {request.POST.get('first_name')} teacher yaratiz "]
         request.session["actions"] = actions
 
         teacher_count = request.session.get('teacher_count', 0)
@@ -256,10 +256,12 @@ def teacher_edit(request, pk):
     model = Teacher.objects.get(pk=pk)
     form = TeacherForm(request.POST or None, instance=model)
     if request.POST and form.is_valid():
-        form.save()
 
+        form.save()
+        ism = request.POST
+        print(ism)
         actions = request.session.get('actions', [])
-        actions += [f"Siz: {request.POST.get('name')} ni o'zgartirdiz"]
+        actions += [f"Siz: {request.POST.get('first_name')} ni o'zgartirdiz"]
         request.session["actions"] = actions
 
         return redirect('teacher_list')
@@ -354,7 +356,7 @@ def student_create(request):
         form.save()
 
         actions = request.session.get('actions', [])
-        actions += [f"Siz yangi {request.POST.get('name')} student yaratiz "]
+        actions += [f"Siz yangi {request.POST.get('first_name')} ismli student yaratiz "]
         request.session["actions"] = actions
 
         student_count = request.session.get('student_count', 0)
@@ -377,7 +379,7 @@ def student_edit(request, pk):
         form.save()
 
         actions = request.session.get('actions', [])
-        actions += [f"Siz: {request.POST.get('name')} ni o'zgartirdiz"]
+        actions += [f"Siz {request.POST.get('first_name')} ismili talaba ma'lumotlarini o'zgartirdiz"]
         request.session["actions"] = actions
 
         return redirect('student_list')

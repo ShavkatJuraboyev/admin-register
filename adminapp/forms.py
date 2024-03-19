@@ -9,7 +9,7 @@ class FacultyForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={'class': 'form-control'})
         }
-
+ 
 
 class KafedraForm(forms.ModelForm):
     class Meta:
@@ -50,7 +50,7 @@ class GroupForm(forms.ModelForm):
             "name": forms.TextInput(attrs={'class': 'form-control'}),
             "faculty": forms.Select(attrs={'class': 'form-control'}),
         }
-
+  
 
 class StudentForm(forms.ModelForm):
     class Meta:
